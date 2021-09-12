@@ -1,14 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {StyledTable, StyledTd, StyledTh} from "./Table.styled";
 
 const Table = (props) => {
-    const [isVisible, setIsVisible] = useState(true);
-    useEffect( () => {
-        if (props.filteredData.length > 0) {
-            setIsVisible(false)
-        }
-    })
-
 
     return (
         <StyledTable>
@@ -28,19 +21,8 @@ const Table = (props) => {
                           sortType={props.field === 'adress.state' ? props.sortType : ''}>State</StyledTh>
             </tr>
             </thead>
-            {isVisible && <tbody>
-            {props.data.map((item) => (
-                <tr key={item.id + item.phone} onClick={props.selectedRow.bind(null, item)}>
-                    <StyledTd>{item.id}</StyledTd>
-                    <StyledTd>{item.firstName}</StyledTd>
-                    <StyledTd>{item.lastName}</StyledTd>
-                    <StyledTd>{item.email}</StyledTd>
-                    <StyledTd>{item.phone}</StyledTd>
-                    <StyledTd>{item.adress.state}</StyledTd>
-                </tr>
-            ))}
-            </tbody>}
-            {!isVisible && <tbody>
+
+            <tbody>
             {props.filteredData.map((item) => (
                 <tr key={item.id + item.phone} onClick={props.selectedRow.bind(null, item)}>
                     <StyledTd>{item.id}</StyledTd>
@@ -51,7 +33,7 @@ const Table = (props) => {
                     <StyledTd>{item.adress.state}</StyledTd>
                 </tr>
             ))}
-            </tbody>}
+            </tbody>
         </StyledTable>
     );
 }

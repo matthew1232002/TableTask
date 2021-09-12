@@ -16,29 +16,36 @@ const StyledWrapper = styled.div`
 function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState([]);
-    const [sortType, setSortType] = useState('desc');
+    const [sortType, setSortType] = useState();
     const [field, setFiled] = useState('id');
     const [row, setRow] = useState('');
     const [filteredData, setFilteredData] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [stateAddress, setStateAddress] = useState(null);
 
     useEffect(() => {
         setIsLoading(false)
-
         async function fetchData() {
             const response = await fetch(`https://itrex-react-lab-files.s3.eu-central-1.amazonaws.com/react-test-api.json`);
             const loadedData = await response.json();
-            const sortedData = _.orderBy(loadedData, field, 'asc');
+            const sortedData = _.orderBy(loadedData, 'id', 'asc');
+            setSortType('desc')
             setData(sortedData);
+            setFilteredData(sortedData)
         }
-
         fetchData();
         setIsLoading(true)
 
-    }, [field])
+    }, [])
 
     const onSearchHandler = (text) => {
-        const filteredData = data.filter(item => item['firstName'].toLowerCase().includes(text.toLowerCase()))
-        setFilteredData(filteredData);
+        setSearchText(text);
+        manageFilters(stateAddress, text);
+    }
+
+    const filterByState = (state) => {
+        setStateAddress(state);
+        manageFilters(state);
     }
 
     const onSortHandler = (activeField) => {
@@ -50,13 +57,32 @@ function App() {
         const copyData = data.concat();
 
         const sortedData = _.orderBy(copyData, activeField, sortType);
-        setData(sortedData);
+        setFilteredData(sortedData);
         setFiled(activeField);
     }
 
-    // const sortByState = (state) => {
-    //     const filteredData = data.filter(item => item['address'])
-    // }
+    const manageFilters = (state = stateAddress, text = searchText) => {
+        if (!state && !text) {
+            setFilteredData(data);
+        }
+        else if (text && state) {
+            console.log(text, state)
+            setFilteredData(data.filter(item => {
+                return item.adress.state === state && item.firstName.toLowerCase().includes(text.toLowerCase());
+            }))
+        }
+        else if (text && !state) {
+            setFilteredData(data.filter(item => {
+                return item.firstName.toLowerCase().includes(text.toLowerCase());
+            }))
+        }
+        else if (!text && state) {
+            setFilteredData(data.filter(item => {
+                return item.adress.state === state;
+            }))
+        }
+    }
+
 
     const selectedRow = (rowData) => {
         setRow(rowData)
@@ -69,7 +95,7 @@ function App() {
             <Layout>
                 <StyledWrapper>
                     <SearchForm onSearchHandler={onSearchHandler}/>
-                    <SearchSelector/>
+                    <SearchSelector onSelectState={filterByState}/>
                 </StyledWrapper>
                 <Table data={data}
                        filteredData={filteredData}
