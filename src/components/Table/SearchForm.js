@@ -1,7 +1,12 @@
 import React from "react";
+import styled from "styled-components";
+
+const StyledInput = styled.input`
+  padding: 5px;
+  background-color: beige;
+`;
 
 const SearchForm = (props) => {
-
 
 
     const changeHandler = (event) => {
@@ -12,7 +17,7 @@ const SearchForm = (props) => {
 
     return (
         <div>
-            <input type='text' placeholder='search by name: Sue'  onChange={changeHandler}/>
+            <StyledInput type='text' placeholder='search by name: Sue' onChange={changeHandler}/>
         </div>
     )
 }
