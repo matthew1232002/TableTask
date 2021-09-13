@@ -1,25 +1,21 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
 
-const StyledInput = styled.input`
-  padding: 5px;
-  background-color: beige;
-`;
+const SearchForm = ({ onSearchHandler }) => {
+  const changeHandler = (event) => {
+    onSearchHandler(event.target.value);
+  };
 
-const SearchForm = (props) => {
-
-
-    const changeHandler = (event) => {
-        const value = event.target.value;
-        props.onSearchHandler(value);
-    }
-
-
-    return (
-        <div>
-            <StyledInput type='text' placeholder='search by name: Sue' onChange={changeHandler}/>
-        </div>
-    )
-}
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="search by name: Sue"
+        onChange={changeHandler}
+        aria-label="search by name"
+      />
+    </div>
+  );
+};
 
 export default SearchForm;
+
