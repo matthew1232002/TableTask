@@ -10,10 +10,7 @@ const SearchSelector = ({ onSelectState }) => {
 
   return (
     <form>
-      <StyledTitle
-        value={selectValue}
-        onChange={handleChange}
-      >
+      <StyledTitle value={selectValue} onChange={handleChange}>
         <StyledOption value="">Filter by state</StyledOption>
         <StyledOption value="WI">WI</StyledOption>
         <StyledOption value="TN">TN</StyledOption>

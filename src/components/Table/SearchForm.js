@@ -1,4 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const StyledInput = styled.input`
+  padding: 5px;
+  background-color: beige;
+`;
 
 const SearchForm = ({ onSearchHandler }) => {
   const changeHandler = (event) => {
@@ -7,7 +13,7 @@ const SearchForm = ({ onSearchHandler }) => {
 
   return (
     <div>
-      <input
+      <StyledInput
         type="text"
         placeholder="search by name: Sue"
         onChange={changeHandler}
@@ -18,4 +24,3 @@ const SearchForm = ({ onSearchHandler }) => {
 };
 
 export default SearchForm;
-

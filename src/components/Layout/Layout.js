@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const StyledLayout = styled.div`
   padding: 1rem;
@@ -8,10 +8,8 @@ const StyledLayout = styled.div`
   background-color: beige;
 `;
 
-const Layout = (props) => {
-    return (
-        <StyledLayout>{props.children}</StyledLayout>
-    );
-}
+const Layout = ({ children }) => (
+  <StyledLayout>{children}</StyledLayout>
+);
 
 export default Layout;
